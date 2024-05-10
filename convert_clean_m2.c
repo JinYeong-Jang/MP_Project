@@ -9,16 +9,16 @@
 #define IMAGE_SIZE 960*160*4 //bytes
 
 int main() {
-    uint8_t rgba[IMAGE_SIZE]; //RGBA배열
-    uint8_t rgb[IMAGE_SIZE / 4 * 3]; //RGB배열
+    uint8_t rgba[IMAGE_SIZE]; //RGBA array
+    uint8_t rgb[IMAGE_SIZE / 4 * 3]; //RGB array
     uint8_t rgbcomp[IMAGE_SIZE / 4]; //compressed RGB
-    uint8_t buffer[BUFFER_SIZE];    //16bytes크기 버퍼
-    size_t bytes_read;              //읽은 바이트 수
+    uint8_t buffer[BUFFER_SIZE];    //16bytes size buffer
+    size_t bytes_read;              //var for bytes read
     FILE *fileIn = fopen("2024S_MA_image_rgba.png", "rb");
     FILE *fileOut = fopen("output_rgb_m2.png", "wb");
     FILE *fileOut2 = fopen("output_rgbcomp_m2.png", "wb");
 
-    //파일 입출력 실패시
+    //FILE fetch failed
     if (!fileIn) {
         printf("Failed to open input file.\n");
         return 0;
@@ -28,7 +28,7 @@ int main() {
         fclose(fileIn);
         return 0;
     }
-    //읽은 데이터가 없는 경우
+    //If any data readed
     bytes_read = fread(buffer, sizeof(uint8_t), IMAGE_SIZE, fileIn);
     if (bytes_read == 0) {
         fprintf(stderr, "No data read from file.\n");
@@ -37,8 +37,8 @@ int main() {
         return 1;
     }
 
-    fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //파일 포인터를 헤더 이후로 위치
-    fread(rgba, sizeof(uint8_t), IMAGE_SIZE, fileIn); //전체 rgba read
+    fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
+    fread(rgba, sizeof(uint8_t), IMAGE_SIZE, fileIn); //all rgba read
     // Convert RGBA to RGB by ignoring the alpha channel
     size_t j = 0;
     for(size_t k = 0; k < 3; k++){ //k로 반복 추가
@@ -49,8 +49,8 @@ int main() {
             // Alpha channel rgba[i + 3] is ignored
         }
     }
-    unsigned char mask = 0b11100000; //R[7:5], G[7:5] 구현
-    // unsigned char bmask = 0b11000000; //B[7:6] 구현
+    unsigned char mask = 0b11100000; //R[7:5], G[7:5] masking
+    // unsigned char bmask = 0b11000000; //B[7:6] masking
     j = 0;
     size_t i = 0;
     uint8_t tmp;
