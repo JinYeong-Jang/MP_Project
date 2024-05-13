@@ -1,0 +1,7 @@
+--cpu ARM7TDMI
+".\objects\retarget.o"
+".\objects\main.o"
+".\serial.o"
+".\startup.o"
+--library_type=microlib --strict --scatter ".\Objects\example2.sct"
+--summary_stderr --info summarysizes -o .\Objects\example2.axf

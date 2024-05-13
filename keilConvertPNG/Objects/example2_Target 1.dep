@@ -1,0 +1,17 @@
+Dependencies for Project 'example2', Target 'Target 1': (DO NOT MODIFY !)
+F (..\EX2_c_code_compare_ab\main.c)(0x6641FA41)(--c99 --gnu -c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x663DAC13)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
+F (.\retarget.c)(0x663DB40E)(--c99 --gnu -c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526"-o .\objects\retarget.o --omf_browse .\objects\retarget.crf --depend .\objects\retarget.d)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599ECD2C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x663DAC13)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
+I (C:\Keil_v5\ARM\ARMCC\include\assert.h)(0x599ECD2A)
+I (C:\Keil_v5\ARM\ARMCC\include\rt_sys.h)(0x599ECD2C)
+I (RTE_Components.h)(0x663DB40E)
+F (..\EX2_c_code_compare_ab\base.h)(0x6426D8AC)()
+F (.\RTE_Components.h)(0x663DB40E)()
+F (..\EX2_c_code_compare_ab\startup.o)(0x560BB93B)()
+F (..\EX2_c_code_compare_ab\serial.o)(0x560BB93D)()
