@@ -21,7 +21,7 @@ fputs() 또는 puts()의 경우 stream output 종류로 재구현이 필요한�
 https://github.com/STMicroelectronics/STM32CubeWB/blob/master/Projects/P-NUCLEO-WB55.Nucleo/Examples/I2C/I2C_TwoBoards_RestartAdvComIT/MDK-ARM/Serial.h
 retarget.c 와 serial.h를 불러와 알아서 재구현하게 만듦. => 컴파일 가능
 
-TODO
+### TODO
 keil에서 0x4000_0000부터 불러오기 때문에 메모리 단위로 여기서부터 계산하는 c 프로그램 생성
 
 ## 0513
@@ -36,3 +36,10 @@ output 파일을 지정해줘야 한다 오류가 뜨지만, 의도한대로 작
 3. 매번 쓰기 권한을 유동적인 곳에 지정해야 하므로, ARM은 임베디드 시스템에 주로 사용되는 것을 고려해 이후 세 배열도 모두 배열 포인터를 사용한 특정 메모리 범위에서 작동하도록 수정. 이 또한 전통적인 C프로그래밍 방식은 아니나 이미지를 load하고 데이터를 처리하기 전 일정한 곳에 쓰기 권한을 부여해 이미지를 처리하게 설계함.
 4. return(0) 을 예제 프로젝트를 참고하여 _sys_exit(0)으로 바꿈. 오류코드를 뱉어내는 loop에서 프로그램이 정상적으로 종료됨. bmask도 따로 구분하지 않고 mask변수 하나로 rgbcomp를 구현해도 정상 작동함.
 ++keil 작업 영역을 현재 branch 작업영역 내부로 이동, keil 작업내용도 기록될 것임.
+
+2번째 알고리즘에 대해서도 테스트 후 완벽 동작 확인, convert_keil_m2.c에 완성된 코드 저장
+
+### TODO
+- 두 알고리즘의 속도 차이 비교
+- 두 알고리즘 호환성 최적화(이미지 크기 변동 등)
+- Func 1~3 함수로 포함시켜 두 알고리즘에 대해 각각 실행
