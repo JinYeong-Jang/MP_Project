@@ -41,15 +41,15 @@ main.c(19): warning:  #513-D: a value of type "int" cannot be assigned to an ent
       rgbcomp = 0x40600000;
 main.c(19): warning:  #152-D: conversion of nonzero integer to pointer
       rgbcomp = 0x40600000;
-main.c(24): warning:  #513-D: a value of type "int" cannot be assigned to an entity of type "uint8_t *"
+main.c(25): warning:  #513-D: a value of type "int" cannot be assigned to an entity of type "uint8_t *"
       p = 0x40000000 + HEADER_SIZE;   //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
-main.c(24): warning:  #152-D: conversion of nonzero integer to pointer
+main.c(25): warning:  #152-D: conversion of nonzero integer to pointer
       p = 0x40000000 + HEADER_SIZE;   //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
-main.c(44): warning:  #223-D: function "_sys_exit" declared implicitly
+main.c(48): warning:  #223-D: function "_sys_exit" declared implicitly
       _sys_exit(0);
 main.c: 11 warnings, 0 errors
 linking...
-Program Size: Code=1656 RO-data=16 RW-data=4 ZI-data=1164  
+Program Size: Code=1648 RO-data=16 RW-data=4 ZI-data=1164  
 ".\Objects\example2.axf" - 0 Error(s), 11 Warning(s).
 Build Time Elapsed:  00:00:01
 </pre>
