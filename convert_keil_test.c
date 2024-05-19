@@ -19,26 +19,50 @@ int main() {
     rgbcomp = 0x40600000;
     //0x40200000, 0x407FFFFF Memory Map needed
     size_t i = 0;
-    size_t j = 0; 
+    size_t j = 0;
+    size_t k = 0;
 
     p = 0x40000000 + HEADER_SIZE;   //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
     for(i = 0 ; i<IMAGE_SIZE; i++){
         rgba[i] = p[i];
     } //fread(rgba, sizeof(uint8_t), IMAGE_SIZE, fileIn); //Whole rgba read
     
-    for (i = 0; i < IMAGE_SIZE; i += 4) {
-        rgb[j++] = rgba[i];     // Red
-        rgb[j++] = rgba[i + 1]; // Green
-        rgb[j++] = rgba[i + 2]; // Blue
-        // Alpha channel rgba[i + 3] is ignored
-    } // Convert RGBA to RGB by ignoring the alpha channel
-    
-    unsigned char mask = 0b11100000; //R[7:5], G[7:5] masking
-    j = 0;
-    while (j < IMAGE_SIZE/4) {
-        rgbcomp[j++] = (rgb[j*3] & mask) + ((rgb[j*3+1] & mask) >> 3) + ((rgb[j*3+2] & mask) >> 6);
+    for (k = 0; k < 3; k++){ //R, G, B  *3 times
+        for (i = 0; i < IMAGE_SIZE; i += 4) {
+            rgb[j++] = rgba[i+k];     // RRRGGGBBB order
+        } // Convert RGBA to RGB by ignoring the alpha channel
     }
 
+    uint32_t mask = 0xE0E0E0E0; //masking 0b1110_0000 by register length
+	uint32_t bmask = 0xC0C0C0C0;
+    uint32_t *regtmp;
+    uint32_t *readbuffer;
+    readbuffer = 0x40400000;
+    regtmp = 0x40600000;
+    i = 0;
+	j=0;
+    while (j < IMAGE_SIZE/16) {
+        regtmp[j++] += readbuffer[i++]&mask;
+    }
+    j=0;
+    while (j < IMAGE_SIZE/16) {
+        regtmp[j++] += (readbuffer[i++]&mask) >> 3;
+    }
+    j=0;
+    while (j < IMAGE_SIZE/16) {
+        regtmp[j++] += (readbuffer[i++]&bmask) >> 6;
+    }
+	/* //위의 3개의 while문과 같은 코드
+	for(k = 0; k < 3; k++){
+        j = 0;
+        while (j < IMAGE_SIZE/16 && k < 2) {
+            regtmp[j++] += readbuffer[i++]&mask >> k*3;
+        }
+				while (j < IMAGE_SIZE/16 && k == 2) {
+            regtmp[j++] += readbuffer[i++]&bmask >> 6;
+        }
+    }
+	*/
     printf("Output 'output_rgbcomp.bmp' created.\n");
 
     _sys_exit(0);
