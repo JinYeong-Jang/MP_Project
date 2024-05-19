@@ -4,7 +4,7 @@ void IHDRChunk(FILE* file, FILE* fileOut, int width, int height, int bpp, int co
 void Decimaltohex(FILE* file, FILE* fileOut, int value);
 int Square(int a, int b);
 void FindIDATChunkAndCopyPaste(FILE* file, FILE* fileOut);
-void RGBAtoBinary(FILE* file, FILE* fileOut, int LSIZE);
+void RGBtoBinary(FILE* file, FILE* fileOut, int LSIZE);
 void IENDChunk(FILE* fileOut);
 
 
@@ -16,7 +16,7 @@ int main()
     SkipHeader(file, fileOut);
     IHDRChunk(file, fileOut, 960, 160, 1, 7);  //binary type은 존재하지 않기 때문에 colortype을 임의로 7로 설정
     FindIDATChunkAndCopyPaste(file, fileOut);
-    RGBAtoBinary(file, fileOut, LSIZE);
+    RGBtoBinary(file, fileOut, LSIZE);
     IENDChunk(fileOut);
     fclose(fileOut);
     fclose(file);
@@ -116,7 +116,7 @@ void FindIDATChunkAndCopyPaste(FILE* file, FILE* fileOut)
     printf("IDAT chunk를 찾을 수 없습니다.");
     return; //IDAT영역 못찾음 ERROR 발생
 }
-void RGBAtoBinary(FILE* file, FILE* fileOut, int LSIZE)
+void RGBtoBinary(FILE* file, FILE* fileOut, int LSIZE)
 {
     const int SIZE = 3;             // RGBA 3byte 씩 읽어서 처리.
     unsigned char data[SIZE];
