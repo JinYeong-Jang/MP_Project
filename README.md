@@ -10,7 +10,6 @@ ImageTest_binary_m2 : RR..GG..BB.. to Binary convert c++ code
 
 
 ----------------------------------------------------------------------------------------------------- 5/19
-ImageTest_binary_m2.s : RR..GG..BB.. to Binary convert arm code 
 
 assembly codes (최적화 이전) (PNG 관련 함수 넣은 이후)
 
