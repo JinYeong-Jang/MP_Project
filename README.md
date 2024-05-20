@@ -7,4 +7,4 @@ convert_gray1b.c 는 1번 알고리즘에 대해 (max+min)/2로 grayscale
 
 convert_gray2a.c 는 2번 알고리즘에 대해 RGB average로 grayscale
 
-convert_gray2b.c 는 1번 알고리즘에 대해 (max+min)/2로 grayscale
+convert_gray2b.c 는 2번 알고리즘에 대해 (max+min)/2로 grayscale
