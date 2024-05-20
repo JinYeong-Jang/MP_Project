@@ -10,11 +10,11 @@ ImageTest_binary_m2 : RR..GG..BB.. to Binary convert c++ code
 
 
 ----------------------------------------------------------------------------------------------------- 5/19
-ImageTest_binary_m2.s : RR..GG..BB.. to Binary convert arm code (IDAT Chunk 찾기 함수 밖에 없음)  (작성중..)
+ImageTest_binary_m2.s : RR..GG..BB.. to Binary convert arm code 
 
 assembly codes (최적화 이전) (PNG 관련 함수 넣은 이후)
 
-ImageTest.s : RGBA to Binary convert arm code 
+ImageTest.s : RGBA to Binary convert arm code
 
 
 assembly codes (최적화 이후) (PNG 관련 함수 넣은 이후)
