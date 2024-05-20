@@ -1,0 +1,97 @@
+    11: int main() { 
+    12:     uint8_t *p; 
+    13:     uint8_t *rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array 
+    14:     uint8_t *rgb; //uint8_t rgb[IMAGE_SIZE * 3/4]; //RGB array 
+    15:     uint8_t *rgbcomp; //uint8_t rgbcomp[IMAGE_SIZE / 4]; //compressed RGB 
+    16:     size_t i, j; 
+0x00000554  E92D47F0  STMDB     R13!,{R4-R10,R14}
+    17:     p = 0x40000000 + HEADER_SIZE; //memory pointer - size 4000byte 
+    18:     //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header 
+0x00000558  E3A091D9  MOV       R9,#0x40000036
+    19:     rgba = 0x40200000; 
+0x0000055C  E59F70E0  LDR       R7,[PC,#0x00E0]
+    20:     rgb = 0x40400000; 
+0x00000560  E2876602  ADD       R6,R7,#0x00200000
+    21:     rgbcomp = 0x40600000; 
+    22:     //0x40200000, 0x407FFFFF Memory Map needed 
+    23:  
+0x00000564  E286A602  ADD       R10,R6,#0x00200000
+    24:     for(i = 0 ; i<IMAGE_SIZE; i++){ 
+0x00000568  E3A04000  MOV       R4,#0x00000000
+0x0000056C  EA000002  B         0x0000057C
+    25:         rgba[i] = p[i]; 
+    26:     } //fread(rgba, sizeof(uint8_t), IMAGE_SIZE, fileIn); //Whole rgba read 
+    27:      
+0x00000570  E7D90004  LDRB      R0,[R9,R4]
+0x00000574  E7C70004  STRB      R0,[R7,R4]
+0x00000578  E2844001  ADD       R4,R4,#0x00000001
+0x0000057C  E3540A96  CMP       R4,#0x00096000
+0x00000580  3AFFFFFA  BCC       0x00000570
+    28:     for (i = 0; i < IMAGE_SIZE; i += 4) { 
+0x00000584  E3A04000  MOV       R4,#0x00000000
+0x00000588  EA00000E  B         0x000005C8
+    29:         rgb[j++] = rgba[i];     // Red 
+0x0000058C  E7D71004  LDRB      R1,[R7,R4]
+0x00000590  E1A00005  MOV       R0,R5
+0x00000594  E2855001  ADD       R5,R5,#0x00000001
+0x00000598  E7C61000  STRB      R1,[R6,R0]
+    30:         rgb[j++] = rgba[i + 1]; // Green 
+0x0000059C  E2840001  ADD       R0,R4,#0x00000001
+0x000005A0  E7D71000  LDRB      R1,[R7,R0]
+0x000005A4  E1A00005  MOV       R0,R5
+0x000005A8  E2855001  ADD       R5,R5,#0x00000001
+0x000005AC  E7C61000  STRB      R1,[R6,R0]
+    31:         rgb[j++] = rgba[i + 2]; // Blue 
+    32:         // Alpha channel rgba[i + 3] is ignored 
+    33:     } // Convert RGBA to RGB by ignoring the alpha channel 
+    34:      
+0x000005B0  E2840002  ADD       R0,R4,#0x00000002
+0x000005B4  E7D71000  LDRB      R1,[R7,R0]
+0x000005B8  E1A00005  MOV       R0,R5
+0x000005BC  E2855001  ADD       R5,R5,#0x00000001
+0x000005C0  E7C61000  STRB      R1,[R6,R0]
+    28:     for (i = 0; i < IMAGE_SIZE; i += 4) { 
+    29:         rgb[j++] = rgba[i];     // Red 
+    30:         rgb[j++] = rgba[i + 1]; // Green 
+    31:         rgb[j++] = rgba[i + 2]; // Blue 
+    32:         // Alpha channel rgba[i + 3] is ignored 
+    33:     } // Convert RGBA to RGB by ignoring the alpha channel 
+    34:      
+0x000005C4  E2844004  ADD       R4,R4,#0x00000004
+0x000005C8  E3540A96  CMP       R4,#0x00096000
+0x000005CC  3AFFFFEE  BCC       0x0000058C
+    35:     unsigned char mask = 0b11100000; //R[7:5], G[7:5] masking 
+0x000005D0  E3A080E0  MOV       R8,#0x000000E0
+    36:     j = 0; 
+0x000005D4  E3A05000  MOV       R5,#0x00000000
+    37:     while (j < IMAGE_SIZE/4) { 
+0x000005D8  EA000010  B         0x00000620
+    38:         rgbcomp[j++] = (rgb[j*3] & mask) + ((rgb[j*3+1] & mask) >> 3) + ((rgb[j*3+2] & mask) >> 6); 
+    39:     } 
+    40:  
+0x000005DC  E0850085  ADD       R0,R5,R5,LSL #1
+0x000005E0  E7D60000  LDRB      R0,[R6,R0]
+0x000005E4  E0000008  AND       R0,R0,R8
+0x000005E8  E0851085  ADD       R1,R5,R5,LSL #1
+0x000005EC  E2811001  ADD       R1,R1,#0x00000001
+0x000005F0  E7D61001  LDRB      R1,[R6,R1]
+0x000005F4  E0011008  AND       R1,R1,R8
+0x000005F8  E08001C1  ADD       R0,R0,R1,ASR #3
+0x000005FC  E0851085  ADD       R1,R5,R5,LSL #1
+0x00000600  E2811002  ADD       R1,R1,#0x00000002
+0x00000604  E7D61001  LDRB      R1,[R6,R1]
+0x00000608  E0011008  AND       R1,R1,R8
+0x0000060C  E0800341  ADD       R0,R0,R1,ASR #6
+0x00000610  E20010FF  AND       R1,R0,#0x000000FF
+0x00000614  E1A00005  MOV       R0,R5
+0x00000618  E2855001  ADD       R5,R5,#0x00000001
+0x0000061C  E7CA1000  STRB      R1,[R10,R0]
+0x00000620  E3550B96  CMP       R5,#0x00025800
+0x00000624  3AFFFFEC  BCC       0x000005DC
+    41:     printf("Output 'output_rgbcomp.bmp' created.\n"); 
+    42:  
+0x00000628  E28F0018  ADD       R0,PC,#0x00000018
+0x0000062C  EBFFFFA5  BL        $Ven$AT$I$$__2printf(0x000004C8)
+    43:     _sys_exit(0); 
+0x00000630  E3A00000  MOV       R0,#0x00000000
+0x00000634  EBFFFEC3  BL        _sys_exit(0x00000148)

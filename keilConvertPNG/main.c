@@ -1,4 +1,4 @@
-//last-update 0508-2240
+//last-update 0520-2240
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdint.h>
@@ -21,7 +21,6 @@ int main() {
     rgb = 0x40400000;
     rgbcomp = 0x40600000;
     //0x40200000, 0x407FFFFF Memory Map needed
-
 
     for(i = 0 ; i<IMAGE_SIZE; i++){
         rgba[i] = p[i];

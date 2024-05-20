@@ -1,6 +1,6 @@
 		all(load)		comp
 case1	49.156ms(34.817)	15
-case2	74.244ms(40.449)	34
+case2	40.580ms(33.281)	7
 
 # 0519
 case2에서
@@ -20,4 +20,3 @@ load알고리즘 수정(반복문을 하나로 줄임)
 load 33.281ms
 exit 40.580ms
 comp 7ms
-
