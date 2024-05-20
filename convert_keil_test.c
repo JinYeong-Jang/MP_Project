@@ -12,8 +12,9 @@ int main() {
     uint8_t *p;
     uint8_t *rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array
     uint8_t *rgb; //uint8_t rgb[IMAGE_SIZE * 3/4]; //RGB array
-    uint8_t *rgbcomp; //uint8_t rgbcomp[IMAGE_SIZE / 4]; //compressed RGB
-    p = 0x40000000; //memory pointer - size 4000byte
+    uint32_t *rgbcomp; //uint8_t rgbcomp[IMAGE_SIZE / 4]; //compressed RGB
+    p = 0x40000000 + HEADER_SIZE; //memory pointer - size 4000byte
+    //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
     rgba = 0x40200000;
     rgb = 0x40400000;
     rgbcomp = 0x40600000;
@@ -22,7 +23,6 @@ int main() {
     size_t j = 0;
     size_t k = 0;
 
-    p = 0x40000000 + HEADER_SIZE;   //fseek(fileIn, HEADER_SIZE-1, SEEK_SET); //set pointer after header
     for(i = 0 ; i<IMAGE_SIZE; i++){
         rgba[i] = p[i];
     } //fread(rgba, sizeof(uint8_t), IMAGE_SIZE, fileIn); //Whole rgba read
@@ -34,32 +34,30 @@ int main() {
     }
 
     uint32_t mask = 0xE0E0E0E0; //masking 0b1110_0000 by register length
-	uint32_t bmask = 0xC0C0C0C0;
-    uint32_t *regtmp;
     uint32_t *readbuffer;
     readbuffer = 0x40400000;
-    regtmp = 0x40600000;
     i = 0;
-	j=0;
+	j = 0;
     while (j < IMAGE_SIZE/16) {
-        regtmp[j++] += readbuffer[i++]&mask;
+        rgbcomp[j++] += readbuffer[i++]&mask;
     }
     j=0;
     while (j < IMAGE_SIZE/16) {
-        regtmp[j++] += (readbuffer[i++]&mask) >> 3;
+        rgbcomp[j++] += (readbuffer[i++]&mask) >> 3;
     }
+    mask -= 0x20202020; //0xE0E0E0E0 to 0xC0C0C0C0
     j=0;
     while (j < IMAGE_SIZE/16) {
-        regtmp[j++] += (readbuffer[i++]&bmask) >> 6;
+        rgbcomp[j++] += (readbuffer[i++]&mask) >> 6;
     }
 	/* //위의 3개의 while문과 같은 코드
 	for(k = 0; k < 3; k++){
         j = 0;
         while (j < IMAGE_SIZE/16 && k < 2) {
-            regtmp[j++] += readbuffer[i++]&mask >> k*3;
+            rgbcomp[j++] += readbuffer[i++]&mask >> k*3;
         }
 				while (j < IMAGE_SIZE/16 && k == 2) {
-            regtmp[j++] += readbuffer[i++]&bmask >> 6;
+            rgbcomp[j++] += readbuffer[i++]&bmask >> 6;
         }
     }
 	*/
