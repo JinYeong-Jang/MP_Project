@@ -15,3 +15,9 @@ comp에 7ms
 load 45.057ms
 exit 52.356ms
 comp 7ms
+
+load알고리즘 수정(반복문을 하나로 줄임)
+load 33.281ms
+exit 40.580ms
+comp 7ms
+
