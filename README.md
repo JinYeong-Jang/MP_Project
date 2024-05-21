@@ -2,6 +2,10 @@
 - convert_clean.c 는 테스트용 코드에서 잡다한 코드 주석처리하고 RGB_RGB_RGB_RGB 순서대로 배치하여 compress
 - convert_clean_m2.c 는 RRR...RRR_GGG...GGG_BBB....BBB 순서대로 배치한 후 compress
 - PNG구조 공부: https://hojin3777.notion.site/22ae61fe3f6f47469b55f6b17820b430?pvs=74
+- LodePNG: https://lodev.org/lodepng/
+- 지금까지 작동한 한줄기 빛: https://cplusplus.com/forum/beginner/267364/
+- stb_image.h : https://github.com/nothings/stb/blob/master/stb_image.h
+- stb_image_write.h : https://github.com/nothings/stb/blob/master/stb_image_write.h
 
 ---
 # TROUBLESHOOTING
@@ -81,3 +85,23 @@ load에 33.281ms 소요, 그 외 자잘한 코드 최적화로(변수 초기와 
 case1도 비슷한 방식으로 최적화, 그러나 소요시간은 차이 없음.
 
 압축은 동일하게 7ms소요
+
+## 0521
+회의 도중 grayscale 및 binary 또한 4바이트 단위로 처리하여 최적화할수 있는 알고리즘 제의
+<img width="400" alt="KakaoTalk_20240521_155945849" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/143b9324-8f82-4486-bbaf-232a63fb3de4">
+
+또한 PNG 파일 decode 및 encode 가능한 라이브러리 찾아냄(!!!)
+<img width="400" alt="KakaoTalk_20240521_220747035" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/b5a66e1c-07e6-493a-9d48-92765f971604">
+
+첫번째 픽셀 및 마지막 4칸의 픽셀 정보와 출력한 HEX파일이 일치함 확인
+<img width="500" alt="KakaoTalk_20240521_222627920" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/28cd134d-f954-467b-ba5a-49dab0a1ccab">
+
+이를 바탕으로 R정보만 255로 고정시키는 간단한 테스트 진행
+<img width="371" alt="KakaoTalk_20240521_224842634" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/56634ec8-0b53-4c20-ae13-71a547c19f0c">
+<img width="371" alt="KakaoTalk_20240521_224849615" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/09f07874-2e83-41a1-8b6f-a219a8336d24">
+
+-> 모두 정상작동!
+
+### TODO
+- Keil 위에서 돌아가는지 확인
+- Keil 위에서 돌아가지 않는 경우, VS에서 HEX 파일만 추출하여 Keil에서 데이터만 처리 후 출력된 결과물로 다시 PNG파일 변환
