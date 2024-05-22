@@ -6,6 +6,8 @@
 - 지금까지 작동한 한줄기 빛: https://cplusplus.com/forum/beginner/267364/
 - stb_image.h : https://github.com/nothings/stb/blob/master/stb_image.h
 - stb_image_write.h : https://github.com/nothings/stb/blob/master/stb_image_write.h
+- Keil hex in python : https://stackoverflow.com/questions/66589411/load-hex-file-with-intelhex-format-in-python
+
 
 ---
 # TROUBLESHOOTING
@@ -105,3 +107,21 @@ case1도 비슷한 방식으로 최적화, 그러나 소요시간은 차이 없�
 ### TODO
 - Keil 위에서 돌아가는지 확인
 - Keil 위에서 돌아가지 않는 경우, VS에서 HEX 파일만 추출하여 Keil에서 데이터만 처리 후 출력된 결과물로 다시 PNG파일 변환
+
+## 0521
+간단히 픽셀당 1바이트 크기의 Grayscale이미지를 생성하는 테스트 진행\
+<img width="400" alt="image" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/234773fe-1bd1-4998-ac30-a1d65945a50d">\
+1바이트 크기의 Grayscale은 동작하나, 문제는 라이브러리가 1바이트 RGB는 지원하지 않음(func1에서 필요). 
+
+이미지를 Hex 파일로 내보내도, HEX veiwer에서는 정상적으로 데이터를 볼 수 있으나 intelHex 형식이 아니라서 keil에서 정상적으로 불러오지 못함
+
+반대로 keil에서 내보낸 파일은 intelHex 형식이어서 다시 c에서 이미지로 변환하려면 intelHEX파일을 배열에 집어넣는 과정이 필요함
+
+https://github.com/AhmedYousriSobhi/Hex-To-array-txt\
+회의중 hex를 텍스트 배열로 바꿔주는 코드를 찾아 테스트
+<img width="400" alt="스크린샷 2024-05-22 173554" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/8a7a638c-22a8-41d1-9c57-590a5fb5078f">
+
+그러나 이 코드를 이해해서 필요에 맞게 수정한 후, 배열에 넣어 이미지로 변환하는 과정이 추가로 필요했고, 또한 구해온 라이브러리에서 1바이트 RGB를 지원하지 않아 상대적으로 쉬운 파이썬을 활용하여 구현하기로 결정함
+
+C에서 약 8000줄의 png변환 헤더와 load, write명령어 등 복잡한 과정이 필요했던것과 달리 단 5줄의 코드로 픽셀 정보를 얻을 수 있었음\
+<img width="400" alt="pythonTTALKKAK" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/cd32bd25-c826-46f3-9216-770f4f223580">

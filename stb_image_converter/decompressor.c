@@ -4,10 +4,13 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STBI_FAILURE_USERMSG
 #include "stb_image.h"
 #include "stb_image_write.h"
 #define IMAGE_SIZE 960*640*4
+#include "hex_to_array.h"
 
+/*
 int main()
 {   
     char filename[] = "image.png";
@@ -29,12 +32,36 @@ int main()
     
     stbi_write_png("outputimage.png", 960, 640, 4, data, 960 * 4);
 
-    /*
-    for (size_t i = 0; i < 1920; i++)
-    {
-        printf("%d ", data[i]);
-    }
-    */
-
+    //for (size_t i = 0; i < 1920; i++)
+    //{
+    //    printf("%d ", data[i]);
+    //}
+  
     stbi_image_free(data);
+}*/
+
+
+int main()
+{
+    char filename[] = "rgb.hex";
+    char outputimage[] = "outputimage.png";
+
+    // ... x = width, y = height, n = # 8-bit components per pixel ...
+    // ... replace '0' with '1'..'4' to force that many components per pixel
+    // ... but 'n' will always be the number that it would have been if you said 0
+    
+    //int x, y, n;
+    //uint8_t data[IMAGE_SIZE/4];
+    //unsigned char rgbcomp[IMAGE_SIZE/4];
+
+    FILE* stream;
+    stream = fopen("rgb.hex", "rb");
+    char str[50000];
+    fread(str, 50, 500, stream);
+    printf("%s", str);
+    //stbi_write_png(outputimage, 960, 640, 3, data, 960 * 3);
+
+
+
+    //stbi_image_free(outputimage);
 }
