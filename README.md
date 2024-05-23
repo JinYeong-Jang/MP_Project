@@ -108,7 +108,7 @@ case1도 비슷한 방식으로 최적화, 그러나 소요시간은 차이 없�
 - Keil 위에서 돌아가는지 확인
 - Keil 위에서 돌아가지 않는 경우, VS에서 HEX 파일만 추출하여 Keil에서 데이터만 처리 후 출력된 결과물로 다시 PNG파일 변환
 
-## 0521
+## 0522
 간단히 픽셀당 1바이트 크기의 Grayscale이미지를 생성하는 테스트 진행\
 <img width="400" alt="image" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/234773fe-1bd1-4998-ac30-a1d65945a50d">\
 1바이트 크기의 Grayscale은 동작하나, 문제는 라이브러리가 1바이트 RGB는 지원하지 않음(func1에서 필요). 
@@ -125,3 +125,13 @@ https://github.com/AhmedYousriSobhi/Hex-To-array-txt\
 
 C에서 약 8000줄의 png변환 헤더와 load, write명령어 등 복잡한 과정이 필요했던것과 달리 단 5줄의 코드로 픽셀 정보를 얻을 수 있었음\
 <img width="400" alt="pythonTTALKKAK" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/cd32bd25-c826-46f3-9216-770f4f223580">
+
+## 0523
+Keil에서 받은 output을 활용하여 파이썬에서 이를 8-bit RGB로 출력해주는 코드 생성\
+PNG파일 특성상 과제에서 주어진 이미지 형식을 지원하지 않아 Keil에서 받은 데이터를 토대로 Image palette를 만들고, 다시 각 픽셀 데이터를 팔레트와 매칭시켜준 후 이미지에 픽셀 데이터와 팔레트를 집어넣는 식으로 구현.\
+배열의 형태가 비효율적으로 바뀌지만 팀원들의 이해를 위해 배열의 shape이 바뀌는 코드들을 그대로 둠.\
+<img width="400" alt="compRGB" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/3d5d08f0-37b2-4a0d-ac83-5bb2e816ee9b">
+
+### TODO
+func 2, 3에 대해서도 출력하는 keil 코드 수정 및 파이썬 코드 생성
+코드 다듬고 보고서 작성
