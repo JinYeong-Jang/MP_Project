@@ -17,7 +17,7 @@ int main() {
     rgb = rgba+IMAGE_SIZE;
     rgbcomp = rgb+IMAGE_SIZE;
     readbuffer = rgba+IMAGE_SIZE;
-    //0x40000000, 0x40708000 Memory Map needed
+    //0x50000000, 0x50708000 Memory Map needed
     
     for (i = 0, j = 0; i < IMAGE_SIZE; i += 4, j++) {
         rgb[j] = rgba[i];   // Red

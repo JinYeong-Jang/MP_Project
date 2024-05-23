@@ -38,16 +38,16 @@ int main() {
     readbuffer = 0x40400000;
     i = 0;
 	j = 0;
-    while (j < IMAGE_SIZE/16) {
+    while (j < COLOR_SIZE/4) {
         rgbcomp[j++] += readbuffer[i++]&mask;
     }
     j=0;
-    while (j < IMAGE_SIZE/16) {
+    while (j < COLOR_SIZE/4) {
         rgbcomp[j++] += (readbuffer[i++]&mask) >> 3;
     }
     mask -= 0x20202020; //0xE0E0E0E0 to 0xC0C0C0C0
     j=0;
-    while (j < IMAGE_SIZE/16) {
+    while (j < COLOR_SIZE/4) {
         rgbcomp[j++] += (readbuffer[i++]&mask) >> 6;
     }
     printf("Output 'output_rgbcomp.bmp' created.\n");

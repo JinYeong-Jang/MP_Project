@@ -13,7 +13,7 @@ int main() {
     uint8_t *rgb; //uint8_t rgb[IMAGE_SIZE * 3/4]; //RGB array
     uint32_t *rgbcomp; //uint8_t rgbcomp[IMAGE_SIZE / 4]; //compressed RGB
     uint32_t *readbuffer; //same as rgb[] but access in 32bit
-    size_t i, j, k;
+    size_t i, j;
     rgba = 0x50000000;
     rgb = rgba+IMAGE_SIZE;
     rgbcomp = rgb+IMAGE_SIZE;
@@ -21,41 +21,24 @@ int main() {
     //0x50000000, 0x50720000 Memory Map needed
     
     for (i = 0, j = 0; i < IMAGE_SIZE; i += 4, j++) {
-        rgb[j] = rgba[i];   // Red
-        rgb[j+COLOR_SIZE] = rgba[i + 1]; // Green
-        rgb[j+COLOR_SIZE*2] = rgba[i + 2]; // Blue
+        rgb[j] = rgba[i]/3;   // Red
+        rgb[j+COLOR_SIZE] = rgba[i + 1]/3; // Green
+        rgb[j+COLOR_SIZE*2] = rgba[i + 2]/3; // Blue
         // Alpha channel rgba[i + 3] is ignored
     } // Convert RGBA to RGB by ignoring the alpha channel while divide into 3, RRRGGGBBB order
 
-    rgb = 0x50000000+IMAGE_SIZE; //reset pointer
-    for(i=0; i<COLOR_SIZE*3; i++){
-        rgb[i] = rgb[i]/3;
-    }
+    uint32_t mask = 0xE0E0E0E0; //masking 0b1110_0000 by register length
 
     i = 0;
-    for(k = 0; k < 3; k++){
+    for(size_t k = 0; k < 3; k++){
         j = 0;
         while (j < COLOR_SIZE/4) {
             rgbcomp[j++] += readbuffer[i++];
         }
     }
+    rgba = 0x504B0000;
+    rgb = 0x50708000
 
-    rgba = 0x504B0000; //reuse pointer - target to rgbcomp
-    rgb = 0x50708000; //reuse pointer - target to bin
-    j = 0; k = 0;
-    uint8_t binBuffer;
-    while (j< BINARY_SIZE) {
-        for(i = 7; i > 0; i--){
-            if (rgba[k++] > 0x7F){ //127
-                binBuffer += 1 << i;
-            } /*else {
-                binBuffer += 0
-            }*/
-        }
-        rgb[j++] = binBuffer;
-        binBuffer = 0;
-    }
-    
 
     printf("Convertion done.\n");
 

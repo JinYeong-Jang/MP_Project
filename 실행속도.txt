@@ -20,3 +20,8 @@ load알고리즘 수정(반복문을 하나로 줄임)
 load 33.281ms
 exit 40.580ms
 comp 7ms
+
+# 0523 - realRGBA
+load 51.201ms
+exit 80.385ms
+comp 29.184ms

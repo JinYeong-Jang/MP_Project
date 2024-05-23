@@ -133,5 +133,7 @@ PNG파일 특성상 과제에서 주어진 이미지 형식을 지원하지 않�
 <img width="400" alt="compRGB" src="https://github.com/JinYeong-Jang/MP_Project/assets/71000630/3d5d08f0-37b2-4a0d-ac83-5bb2e816ee9b">
 
 ### TODO
-func 2, 3에 대해서도 출력하는 keil 코드 수정 및 파이썬 코드 생성
-코드 다듬고 보고서 작성
+- func 2, 3에 대해서도 출력하는 keil 코드 수정 및 파이썬 코드 생성
+- keil에서 Grayscale생성 시 /3을 어셈블리에서 제대로 처리하지 못해(output을 생성하긴 하나 /3에서 inf. loop가 걸림) max min 알고리즘을 사용하되 4바이트 연산 등 효율적인 연산이 가능한지 확인(생성한 output으론 이미지 생성 완료)
+- 현준님이 제공한 binary(*3으로 구한 binary, max min으로 구한 binary) 파일 둘 다 변환(완료)
+- 코드 다듬고 보고서 작성

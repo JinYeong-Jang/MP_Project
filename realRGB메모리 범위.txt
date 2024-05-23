@@ -3,12 +3,14 @@ image size 960*640(byte) = 0x9_6000
 bin size 960*640(byte)/8(bits) = 0x1_2C00
 기존 *p삭제
 
-0x40000000 //RGBA
-0x40258000 //RGB
-0x404B0000 - 0x40708000//RGBcomp
-0x404B0000 - 0x40545FFF //RGBcomp output 범위
+0x50000000 //RGBA
+0x50258000 //RGB
+0x504B0000 - 0x50708000 //RGBcomp
+0x50708000 - 0x5071AC00 //Bin
 
-save <filename> 0x404B0000, 0x40545FFF
+save <filename> 0x504B0000, 0x50545FFF //RGBcomp output 범위
+save <filename> 0x50708000, 0x5071ABFF
 
 Memory map
-0x40000000, 0x40708000
+0x50000000, 0x50708000
+0x50000000, 0x50720000 //binary
