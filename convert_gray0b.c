@@ -9,25 +9,20 @@
 
 int main() {
     uint8_t* p;
-    uint8_t* rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array
+    //uint8_t* rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array
 
     uint8_t* gray; //uint8_t gray[IMAGE_SIZE / 4]; //Grayscale array
-    size_t i, j;
+    size_t j;
     uint8_t min_val, max_val;
     p = 0x40000000 + HEADER_SIZE; //memory pointer
-    rgba = 0x40200000;
+    //rgba = 0x40200000;
     gray = 0x40400000;
     //0x40200000, 0x407FFFFF Memory Map needed
 
-
-    for (i = 0; i < IMAGE_SIZE; i++) {
-        rgba[i] = p[i];
-    }
-
     j = 0;
-    while (j < IMAGE_SIZE / 4) {
-        min_val = (rgba[j * 4]) < (rgba[j * 4 + 1]) ? ((rgba[j * 4]) < (rgba[j * 4 + 2]) ? (rgba[j * 4]) : (rgba[j * 4 + 2])) : ((rgba[j * 4 + 1]) < (rgba[j * 4 + 2]) ? (rgba[j * 4 + 1]) : (rgba[j * 4 + 2]));
-        max_val = (rgba[j * 4]) > (rgba[j * 4 + 1]) ? ((rgba[j * 4]) > (rgba[j * 4 + 2]) ? (rgba[j * 4]) : (rgba[j * 4 + 2])) : ((rgba[j * 4 + 1]) > (rgba[j * 4 + 2]) ? (rgba[j * 4 + 1]) : (rgba[j * 4 + 2]));
+    while (j < HEADER_SIZE + (IMAGE_SIZE / 4)) {
+        min_val = (p[j * 4]) < (p[j * 4 + 1]) ? ((p[j * 4]) < (p[j * 4 + 2]) ? (p[j * 4]) : (p[j * 4 + 2])) : ((p[j * 4 + 1]) < (p[j * 4 + 2]) ? (p[j * 4 + 1]) : (p[j * 4 + 2]));
+        max_val = (p[j * 4]) > (p[j * 4 + 1]) ? ((p[j * 4]) > (p[j * 4 + 2]) ? (p[j * 4]) : (p[j * 4 + 2])) : ((p[j * 4 + 1]) > (p[j * 4 + 2]) ? (p[j * 4 + 1]) : (p[j * 4 + 2]));
         gray[j++] = (min_val + max_val) / 2;
     }
 
