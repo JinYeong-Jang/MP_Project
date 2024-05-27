@@ -1,6 +1,10 @@
 # MP_Project
 convert_keil.c에대해서 grayscale한 c코드 convert_gray.c
 
+convert_gray0a.c 는 RGBA그대로에서 RGB average로 grayscale
+
+convert_gray0b.c 는 RGBA그대로에서 (max+min)/2로 grayscale
+
 convert_gray1a.c 는 1번 알고리즘에 대해 RGB average로 grayscale
 
 convert_gray1b.c 는 1번 알고리즘에 대해 (max+min)/2로 grayscale
