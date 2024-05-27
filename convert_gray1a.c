@@ -19,10 +19,10 @@ int main() {
     gray = (uint8_t*)0x40600000;
     //0x40200000, 0x407FFFFF Memory Map needed
 
-    // RGBA µ¥ÀÌÅÍ¸¦ ÀÐ¾î¿É´Ï´Ù.
+    
     for (i = 0; i < IMAGE_SIZE; i++) {
         rgba[i] = p[i];
-    } // ¿¹½Ã¿¡¼­´Â ÆÄÀÏ ÀÔÃâ·Â ´ë½Å ¸Þ¸ð¸®¿¡¼­ Á÷Á¢ ÀÐ¾î¿É´Ï´Ù.
+    } 
 
     
    for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
@@ -32,7 +32,7 @@ int main() {
         // Alpha channel rgba[i + 3] is ignored
     } // Convert RGBA to RGB by ignoring the alpha channel
 
-		for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
+   for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
         uint8_t r = rgb[i];     // Red
         uint8_t g = rgb[i + 1]; // Green
         uint8_t b = rgb[i + 2]; // Blue
@@ -41,6 +41,6 @@ int main() {
     }
     printf("Output 'output_gray.bmp' created.\n");
 
-    // ÇÁ·Î±×·¥ Á¾·á
+    
     _sys_exit(0);
 }
