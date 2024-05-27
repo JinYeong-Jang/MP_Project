@@ -10,35 +10,29 @@
 int main() {
     uint8_t* p;
     uint8_t* rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array
-	uint8_t *rgb;
+
     uint8_t* gray; //uint8_t gray[IMAGE_SIZE / 4]; //Grayscale array
     size_t i, j;
+    uint8_t min_val, max_val;
     p = 0x40000000 + HEADER_SIZE; //memory pointer
     rgba = 0x40200000;
-	rgb = 0x40400000;
-    gray = 0x40600000;
+    gray = 0x40400000;
     //0x40200000, 0x407FFFFF Memory Map needed
 
-    
+
     for (i = 0; i < IMAGE_SIZE; i++) {
         rgba[i] = p[i];
-    } 
+    }
 
-    
-   for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
-        rgb[j++] = rgba[i];     // Red
-        rgb[j++] = rgba[i + 1]; // Green
-        rgb[j++] = rgba[i + 2]; // Blue
-        // Alpha channel rgba[i + 3] is ignored
-    } // Convert RGBA to RGB by ignoring the alpha channel
+    j = 0;
+    while (j < IMAGE_SIZE / 4) {
+        min_val = (rgba[j * 4]) < (rgba[j * 4 + 1]) ? ((rgba[j * 4]) < (rgba[j * 4 + 2]) ? (rgba[j * 4]) : (rgba[j * 4 + 2])) : ((rgba[j * 4 + 1]) < (rgba[j * 4 + 2]) ? (rgba[j * 4 + 1]) : (rgba[j * 4 + 2]));
+        max_val = (rgba[j * 4]) > (rgba[j * 4 + 1]) ? ((rgba[j * 4]) > (rgba[j * 4 + 2]) ? (rgba[j * 4]) : (rgba[j * 4 + 2])) : ((rgba[j * 4 + 1]) > (rgba[j * 4 + 2]) ? (rgba[j * 4 + 1]) : (rgba[j * 4 + 2]));
+        gray[j++] = (min_val + max_val) / 2;
+    }
 
-   j = 0;
-   while (j < IMAGE_SIZE / 4) {
-       gray[j++] = ((rgb[j * 3]) + (rgb[j * 3 + 1]) + (rgb[j * 3 + 2]))/3;
-   }
-   
     printf("Output.\n");
 
-    
+
     _sys_exit(0);
 }

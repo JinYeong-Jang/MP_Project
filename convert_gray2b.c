@@ -25,15 +25,17 @@ int main() {
         rgba[i] = p[i];
     } // Whole rgba read
 
-    for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
-        rgb[j++] = rgba[i];     // Red
-        rgb[j++] = rgba[i + 1]; // Green
-        rgb[j++] = rgba[i + 2]; // Blue
+    // Convert RGBA to RGB by ignoring the alpha channel
+    for (i = 0, j = 0; i < IMAGE_SIZE; i += 4, j++) {
+        rgb[j] = rgba[i];   // Red
+        rgb[j + COLOR_SIZE] = rgba[i + 1]; // Green
+        rgb[j + COLOR_SIZE * 2] = rgba[i + 2]; // Blue
         // Alpha channel rgba[i + 3] is ignored
-    } // Convert RGBA to RGB by ignoring the alpha channel
+    }
+
 
     // Convert RGBA to RGB by ignoring the alpha channel
-    for (i = 0; i < COLOR_SIZE; i++) {
+    for (i = 0, j=0; i < COLOR_SIZE; i++) {
         uint8_t red = rgb[i];
         uint8_t green = rgb[i + COLOR_SIZE];
         uint8_t blue = rgb[i + COLOR_SIZE * 2];
@@ -43,11 +45,10 @@ int main() {
         uint8_t min_val = (red < green) ? (red < blue ? red : blue) : (green < blue ? green : blue);
 
         // Calculate the average of the max and min values
-        uint8_t grayValue = (max_val + min_val) / 2;
-        grayscale[i] = grayValue; // Store the grayscale value
+        grayscale[j++] = (min_val + max_val) / 2;
     }
 
-    printf("Grayscale image processing completed.\n");
+    printf("OUT.\n");
 
     _sys_exit(0);
 }

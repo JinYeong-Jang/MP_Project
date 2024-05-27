@@ -12,12 +12,12 @@ int main() {
     uint8_t* p;
     uint8_t* rgba; //uint8_t rgba[IMAGE_SIZE]; //RGBA array
     uint8_t* rgb; //uint8_t rgb[IMAGE_SIZE * 3/4]; //RGB array
-    uint32_t* grayscale; //uint8_t grayscale[COLOR_SIZE]; //Grayscale array
+    uint8_t* grayscale; //uint8_t grayscale[COLOR_SIZE]; //Grayscale array
     size_t i, j;
-    p = (uint8_t*)0x40000000 + HEADER_SIZE; //memory pointer - size 4000byte
-    rgba = (uint8_t*)0x40200000;
-    rgb = (uint8_t*)0x40400000;
-    grayscale = (uint32_t*)0x40600000; // Assign memory for grayscale values
+    p = 0x40000000 + HEADER_SIZE; //memory pointer - size 4000byte
+    rgba = 0x40200000;
+    rgb = 0x40400000;
+    grayscale = 0x40600000; // Assign memory for grayscale values
 
     // Memory Map: 0x40200000, 0x407FFFFF needed
 
@@ -33,10 +33,10 @@ int main() {
         // Alpha channel rgba[i + 3] is ignored
     }
 
-		uint32_t *readbuffer;
+	/*uint8_t *readbuffer;
     readbuffer = 0x40400000;
-		i = 0;
-	  j = 0;
+	i = 0;
+	j = 0;
     while (j < COLOR_SIZE/4) {
         grayscale[j++] += readbuffer[i++];
     }
@@ -48,20 +48,21 @@ int main() {
     while (j < COLOR_SIZE/4) {
         grayscale[j++] += readbuffer[i++];
     }
-		j = 0;
+	j = 0;
     while (j < COLOR_SIZE/4) {
-        grayscale[j++] = grayscale[j]/3;
-    }
-    /*// Calculate Grayscale values from RGB
-    for (i = 0; i < COLOR_SIZE; i++) {
-        uint32_t red = rgb[i];
-        uint32_t green = rgb[i + COLOR_SIZE];
-        uint32_t blue = rgb[i + COLOR_SIZE * 2];
-        uint32_t grayValue = (red + green + blue) / 3; // Calculate the average
-        grayscale[i] = grayValue; // Store the grayscale value
+        grayscale[j] = grayscale[j]/3;
+        j++;
     }*/
+    // Calculate Grayscale values from RGB
+    for (i = 0; i < COLOR_SIZE; i++) {
+        uint8_t red = rgb[i];
+        uint8_t green = rgb[i + COLOR_SIZE];
+        uint8_t blue = rgb[i + COLOR_SIZE * 2];
+        
+        grayscale[i] = (red + green + blue) / 3; // Store the grayscale value
+    }
 
-    printf("Grayscale image processing completed.\n");
+    printf("OUT.\n");
 
     _sys_exit(0);
 }
