@@ -25,6 +25,13 @@ int main() {
         rgba[i] = p[i];
     } // Whole rgba read
 
+    for (i = 0, j = 0; i < IMAGE_SIZE; i += 4) {
+        rgb[j++] = rgba[i];     // Red
+        rgb[j++] = rgba[i + 1]; // Green
+        rgb[j++] = rgba[i + 2]; // Blue
+        // Alpha channel rgba[i + 3] is ignored
+    } // Convert RGBA to RGB by ignoring the alpha channel
+
     // Convert RGBA to RGB by ignoring the alpha channel
     for (i = 0; i < COLOR_SIZE; i++) {
         uint8_t red = rgb[i];
